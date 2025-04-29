@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+  <Record id="NavView">
+    <Name type="string" comment="窗口名称">NavView</Name>
+    <Path type="string " comment="预制体路径">UI/NavView/NavView</Path>
+    <Layer type="enum" comment="层级">NormalLayer</Layer>
+    <CSharp type="string" comment="脚本名">NavView</CSharp>
+  </Record>
+  <Record id="SelectTargetView">
+    <Name type="string" comment="窗口名称">SelectTargetView</Name>
+    <Path type="string " comment="预制体路径">UI/SelectTargetView/SelectTargetView</Path>
+    <Layer type="enum" comment="层级">TopLayer</Layer>
+    <CSharp type="string" comment="脚本名">SelectTargetView</CSharp>
+  </Record>
+</Data>

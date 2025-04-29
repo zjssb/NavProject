@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Data>
+  <Record id="1001">
+    <Sid type="int" comment="id(楼层*1000+x)">1001</Sid>
+    <Name type="string" comment="节点名称">一层1号路牌</Name>
+  </Record>
+  <Record id="1002">
+    <Sid type="int" comment="id(楼层*1000+x)">1002</Sid>
+    <Name type="string" comment="节点名称">一层2号路牌</Name>
+  </Record>
+  <Record id="1003">
+    <Sid type="int" comment="id(楼层*1000+x)">1003</Sid>
+    <Name type="string" comment="节点名称">一层3号路牌</Name>
+  </Record>
+  <Record id="1004">
+    <Sid type="int" comment="id(楼层*1000+x)">1004</Sid>
+    <Name type="string" comment="节点名称">一层4号路牌</Name>
+  </Record>
+  <Record id="2001">
+    <Sid type="int" comment="id(楼层*1000+x)">2001</Sid>
+    <Name type="string" comment="节点名称">二层1号路牌</Name>
+  </Record>
+  <Record id="2002">
+    <Sid type="int" comment="id(楼层*1000+x)">2002</Sid>
+    <Name type="string" comment="节点名称">二层2号路牌</Name>
+  </Record>
+  <Record id="2003">
+    <Sid type="int" comment="id(楼层*1000+x)">2003</Sid>
+    <Name type="string" comment="节点名称">二层3号路牌</Name>
+  </Record>
+  <Record id="2004">
+    <Sid type="int" comment="id(楼层*1000+x)">2004</Sid>
+    <Name type="string" comment="节点名称">二层4号路牌</Name>
+  </Record>
+  <Record id="3001">
+    <Sid type="int" comment="id(楼层*1000+x)">3001</Sid>
+    <Name type="string" comment="节点名称">三层1号路牌</Name>
+  </Record>
+  <Record id="3002">
+    <Sid type="int" comment="id(楼层*1000+x)">3002</Sid>
+    <Name type="string" comment="节点名称">三层2号路牌</Name>
+  </Record>
+  <Record id="3003">
+    <Sid type="int" comment="id(楼层*1000+x)">3003</Sid>
+    <Name type="string" comment="节点名称">三层3号路牌</Name>
+  </Record>
+  <Record id="3004">
+    <Sid type="int" comment="id(楼层*1000+x)">3004</Sid>
+    <Name type="string" comment="节点名称">三层4号路牌</Name>
+  </Record>
+  <Record id="4001">
+    <Sid type="int" comment="id(楼层*1000+x)">4001</Sid>
+    <Name type="string" comment="节点名称">四层1号路牌</Name>
+  </Record>
+  <Record id="4002">
+    <Sid type="int" comment="id(楼层*1000+x)">4002</Sid>
+    <Name type="string" comment="节点名称">四层2号路牌</Name>
+  </Record>
+  <Record id="4003">
+    <Sid type="int" comment="id(楼层*1000+x)">4003</Sid>
+    <Name type="string" comment="节点名称">四层3号路牌</Name>
+  </Record>
+  <Record id="4004">
+    <Sid type="int" comment="id(楼层*1000+x)">4004</Sid>
+    <Name type="string" comment="节点名称">四层4号路牌</Name>
+  </Record>
+  <Record id="5001">
+    <Sid type="int" comment="id(楼层*1000+x)">5001</Sid>
+    <Name type="string" comment="节点名称">五层1号路牌</Name>
+  </Record>
+  <Record id="5002">
+    <Sid type="int" comment="id(楼层*1000+x)">5002</Sid>
+    <Name type="string" comment="节点名称">五层2号路牌</Name>
+  </Record>
+  <Record id="5003">
+    <Sid type="int" comment="id(楼层*1000+x)">5003</Sid>
+    <Name type="string" comment="节点名称">五层3号路牌</Name>
+  </Record>
+  <Record id="5004">
+    <Sid type="int" comment="id(楼层*1000+x)">5004</Sid>
+    <Name type="string" comment="节点名称">五层4号路牌</Name>
+  </Record>
+</Data>

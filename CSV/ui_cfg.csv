@@ -1,0 +1,5 @@
+Name,Path,Layer,CSharp
+string,string ,enum,string
+窗口名称,预制体路径,层级,脚本名
+NavView,UI/NavView/NavView,NormalLayer,NavView
+SelectTargetView,UI/SelectTargetView/SelectTargetView,TopLayer,SelectTargetView
