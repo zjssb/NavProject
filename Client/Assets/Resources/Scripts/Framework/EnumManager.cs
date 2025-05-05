@@ -28,6 +28,7 @@ public class EnumManager{
         { TypeEnum.Text, typeof(TextMeshProUGUI) },
         { TypeEnum.Image, typeof(Image) },
         { TypeEnum.GameObject, typeof(GameObject) }
+        
     };
 
 
