@@ -15,17 +15,17 @@ NavMeshProjectSettings:
     cost: 1
   - name: 
     cost: 1
-  - name: F1
+  - name: F11
     cost: 1
-  - name: F2
+  - name: F12
     cost: 1
-  - name: F3
+  - name: F21
     cost: 1
-  - name: F4
+  - name: F22
     cost: 1
-  - name: F5
+  - name: F31
     cost: 1
-  - name: 
+  - name: F32
     cost: 1
   - name: 
     cost: 1

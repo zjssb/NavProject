@@ -3,6 +3,12 @@ using UnityEngine;
 using DG.Tweening;
 
 
+[Serializable]
+public class EleController{
+    public GameObject elevator;
+    public ElevatorNode[] elevatorNodes = Array.Empty<ElevatorNode>();
+}
+
 /// <summary>
 /// 电梯控制器
 /// </summary>
@@ -15,7 +21,9 @@ public class ElevatorController : MonoBehaviour{
     public GameObject elevatorGameObject;
 
     public ElevatorNode[] elevatorNodes;
-
+    
+    public EleController[] eleControllers;
+    
     [Tooltip("电梯的运行速度")] public float elevatorSpeed = 2f;
 
     [Tooltip("电梯启动和停下的总时间")] public float elevatorStartAndStopTime = 1f;

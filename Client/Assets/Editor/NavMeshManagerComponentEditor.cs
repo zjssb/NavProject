@@ -1,49 +1,64 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Editor{
     [CustomEditor(typeof(NavMeshCostManager))]
     public class NavMeshManagerComponentEditor : UnityEditor.Editor{
-        private NavMeshCostManager _manager;
+        private NavMeshCostManager manager;
+        
+        private int elevatorCount;
+        
+        private string[] elevatorsCost;
 
-        private string _elevatorCost;
-
-        private Dictionary<string, string> _areaCostDict;
-
-        NavMeshManagerComponentEditor(){
-            _areaCostDict = new Dictionary<string, string>();
-            _areaCostDict.Add("F1", "1");
-            _areaCostDict.Add("F2", "1");
-            _areaCostDict.Add("F3", "1");
-            _areaCostDict.Add("F4", "1");
-            _areaCostDict.Add("F5", "1");
-        }
-
+        private Dictionary<string, string> areaCostDict;
+        
         public override void OnInspectorGUI(){
-            base.OnInspectorGUI();
-            if (!_manager){
-                _manager = target as NavMeshCostManager;
-                _elevatorCost = _manager.GetElevatorCost().ToString();
-                _areaCostDict["F1"] = _manager.GetStreetPlateCost("F1").ToString();
-                _areaCostDict["F2"] = _manager.GetStreetPlateCost("F2").ToString();
-                _areaCostDict["F3"] = _manager.GetStreetPlateCost("F3").ToString();
-                _areaCostDict["F4"] = _manager.GetStreetPlateCost("F4").ToString();
-                _areaCostDict["F5"] = _manager.GetStreetPlateCost("F5").ToString();
+            base.OnInspectorGUI(); 
+            manager = target as NavMeshCostManager;
+
+
+
+            elevatorCount = manager.Elevators.Length;
+            elevatorsCost = new string[elevatorCount];
+            
+            for (int i = 0; i < elevatorCount; i++){
+                elevatorsCost[i] = manager.GetElevatorCost(i).ToString();
+            }            
+            if (this.areaCostDict == null){
+                this.areaCostDict = new Dictionary<string, string>{
+                    { "F11", "1" },
+                    { "F12", "1" },
+                    { "F21", "1" },
+                    { "F22", "1" },
+                    { "F31", "1" },
+                    { "F32", "1" }
+                };
+                return;
             }
+            areaCostDict["F11"] = manager.GetStreetPlateCostByDict("F11").ToString();
+            areaCostDict["F12"] = manager.GetStreetPlateCostByDict("F12").ToString();
+            areaCostDict["F21"] = manager.GetStreetPlateCostByDict("F21").ToString();
+            areaCostDict["F22"] = manager.GetStreetPlateCostByDict("F22").ToString();
+            areaCostDict["F31"] = manager.GetStreetPlateCostByDict("F31").ToString();
+            areaCostDict["F32"] = manager.GetStreetPlateCostByDict("F32").ToString();
 
             GUILayout.Space(20);
             //电梯权值
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("电梯权值");
-            _elevatorCost = GUILayout.TextField(_elevatorCost, 10);
-            GUILayout.EndHorizontal();
-            List<string> keys = new List<string>(_areaCostDict.Keys);
+            for (int i = 0; i < elevatorCount; i++){
+                GUILayout.BeginHorizontal();
+                GUILayout.Label($"电梯{i}权值");
+                elevatorsCost[i] = GUILayout.TextField(elevatorsCost[i], 10);
+                GUILayout.EndHorizontal();
+            }
+            List<string> keys = new List<string>(areaCostDict.Keys);
             for (int i = 0; i < keys.Count; i++){
                 var key = keys[i];
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(key);
-                _areaCostDict[key] = GUILayout.TextField(_areaCostDict[key], 10);
+                areaCostDict[key] = GUILayout.TextField(areaCostDict[key], 10);
                 
 
                 GUILayout.EndHorizontal();
@@ -51,12 +66,29 @@ namespace Editor{
 
 
             if (GUILayout.Button("设置权值")){
-                _manager.SetElevatorCost(float.TryParse(_elevatorCost, out float elevatorCost) ? elevatorCost : 0);
+                for (int i = 0; i < elevatorCount; i++){
+                    manager.SetElevatorCost(i,
+                        float.TryParse(elevatorsCost[i], out float elevatorCost) ? elevatorCost : -1f);
+                }
+
                 float areaCost;
-                foreach (var key in _areaCostDict.Keys){
-                    _manager.SetStreetPlateCost(key, float.TryParse(_areaCostDict[key], out areaCost) ? areaCost : 0);
+                foreach (var key in areaCostDict.Keys){
+                    manager.SetStreetPlateCost(key, float.TryParse(areaCostDict[key], out areaCost) ? areaCost : 1f);
                 }
             }
+
+            if (GUILayout.Button("复原")){
+                for (int i = 0; i < elevatorCount; i++){
+                    manager.SetElevatorCost(i, -1f);
+                }
+                
+                foreach (var key in areaCostDict.Keys){
+                    manager.SetStreetPlateCost(key, 1f);
+                }
+            }
+            
+            EditorUtility.SetDirty(target);
         }
+        
     }
 }
