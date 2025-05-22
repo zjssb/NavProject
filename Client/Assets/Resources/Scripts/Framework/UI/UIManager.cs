@@ -11,7 +11,12 @@ public class UIManager
     public static UIManager Instance => mInstance ??= new UIManager();
 
     private static UIManager mInstance;
-
+    
+    /// <summary>
+    /// 打开界面
+    /// </summary>
+    /// <param name="name">界面配置表中的名称</param>
+    /// <param name="args">打开界面时所传入的参数</param>
     public void OpenWindow(string name, params object[] args){
         var cfg = ConfigManager.Instance.GetConfig("ui_cfg",name);
         
