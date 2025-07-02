@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class GUIModel : MonoBehaviour{
@@ -22,6 +24,9 @@ public class GUIModel : MonoBehaviour{
             { "NormalLayer", NormalLayer },
         };
     }
-    
-    
+
+
+    private void OnGUI(){
+        GUI.TextArea(new Rect(10, 10, 100, 50),NavAIMoveModel.Instance.agent.remainingDistance.ToString());
+    }
 }

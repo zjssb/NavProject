@@ -13,6 +13,11 @@ public class Elevator{
     public OffMeshLink[] ElevatorLinks = Array.Empty<OffMeshLink>();
 }
 
+[Serializable]
+public class navArea{
+    public float cost;
+    public string areaName;
+}
 /// <summary>
 /// 导航权值管理器
 /// </summary>
@@ -52,18 +57,33 @@ public class NavMeshCostManager : MonoBehaviour{
     /// </summary>
     public Elevator[] Elevators = Array.Empty<Elevator>();
 
-    private Dictionary<string, float> navMeshArea = new();
+    public navArea[] navMeshArea;
+    
+    private Dictionary<string, float> navMeshAreaDict = new();
 
     private void Awake(){
         Instance = this;
-        navMeshArea = new Dictionary<string, float>{
+        navMeshAreaDict = new Dictionary<string, float>{
             { "F11", GetStreetPlateCost("F11") },
             { "F12", GetStreetPlateCost("F12") },
             { "F21", GetStreetPlateCost("F21") },
             { "F22", GetStreetPlateCost("F22") },
-            { "F31", GetStreetPlateCost("F31") },
-            { "F32", GetStreetPlateCost("F32") }
+            // { "F31", GetStreetPlateCost("F31") },
+            // { "F32", GetStreetPlateCost("F32") }
         };
+        navMeshArea = new navArea[4];
+        navMeshArea[0] = new navArea();
+        navMeshArea[0].cost = GetStreetPlateCost("F11");
+        navMeshArea[0].areaName = "F11";
+        navMeshArea[1] = new navArea();
+        navMeshArea[1].cost = GetStreetPlateCost("F12");
+        navMeshArea[1].areaName = "F12";
+        navMeshArea[2] = new navArea();
+        navMeshArea[2].cost = GetStreetPlateCost("F21");
+        navMeshArea[2].areaName = "F21";
+        navMeshArea[3] = new navArea();
+        navMeshArea[3].cost= GetStreetPlateCost("F22");
+        navMeshArea[3].areaName = "F22";
     }
 
     private void Start(){
@@ -87,7 +107,7 @@ public class NavMeshCostManager : MonoBehaviour{
     public void RandomizeCost(){
         Random.InitState((int)System.DateTime.Now.Ticks);
         float cost;
-        var names = navMeshArea.Keys.ToArray();
+        var names = navMeshAreaDict.Keys.ToArray();
         for (int i = 0; i < names.Length; i++){
             cost = Random.Range(StreetPlateCostMin, StreetPlateCostMax);
             SetStreetPlateCost(names[i], cost);
@@ -106,17 +126,20 @@ public class NavMeshCostManager : MonoBehaviour{
     }
 
 
-    public float GetStreetPlateCost(string AreaName){
-        var index = NavMesh.GetAreaFromName(AreaName);
+    public float GetStreetPlateCost(string areaName){
+        var index = NavMesh.GetAreaFromName(areaName);
         return NavMesh.GetAreaCost(index);
     }
 
     public float GetStreetPlateCostByDict(string areaName){
-        if (navMeshArea == null){
-            return 0f;
+        
+        for (int i = 0; i < 4; i++){
+            if (navMeshArea.Length > i && navMeshArea[i].areaName == areaName){
+                return navMeshArea[i].cost;
+            }
         }
 
-        return navMeshArea.GetValueOrDefault(areaName, 0f);
+        return GetStreetPlateCost(areaName);
     }
 
     /// <summary>
@@ -131,7 +154,12 @@ public class NavMeshCostManager : MonoBehaviour{
         }
 
         NavMesh.SetAreaCost(areaIndex, cost);
-        navMeshArea[areaName] = cost;
+        navMeshAreaDict[areaName] = cost;
+        for (int i = 0; i < 4; i++){
+            if (navMeshArea[i].areaName == areaName){
+                navMeshArea[i].cost = cost;
+            }
+        }
     }
 
     /// <summary>

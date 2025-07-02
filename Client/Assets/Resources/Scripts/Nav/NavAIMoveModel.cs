@@ -7,6 +7,11 @@ using UnityEngine.Serialization;
 public class NavAIMoveModel : MonoBehaviour{
     public static NavAIMoveModel Instance;
 
+    /// <summary>
+    /// 是否正在导航
+    /// </summary>
+    public bool isMoveing = false;
+    
     private void Awake(){
         Instance = this;
     }
@@ -19,6 +24,8 @@ public class NavAIMoveModel : MonoBehaviour{
     [FormerlySerializedAs("LineRenderer")] 
     public LineRenderer lineRenderer;
 
+    public GameObject startSteert;
+    
     /// <summary>
     /// 是否正在电梯中
     /// </summary>
@@ -28,15 +35,21 @@ public class NavAIMoveModel : MonoBehaviour{
         if (agent&& agent.isOnOffMeshLink && !isElevator){
             isElevator = true;
             var data = agent.currentOffMeshLinkData;
-            // agent.updateRotation = false;
-            // agent.updatePosition = false;
             agent.velocity = Vector3.zero;
+            FirstPersonController.Instance.cameraCanMove = false;
+            ElevatorController.Instance.SetElevator(agent.gameObject);
             ElevatorController.Instance.Action(data.startPos,data.endPos,agent.gameObject, () => {
+                FirstPersonController.Instance.cameraCanMove = true;
                 isElevator = false;
                 agent.updateRotation = true;
                 agent.updatePosition = true;
                 agent.CompleteOffMeshLink();
             });
+        }
+
+        if (agent && agent.hasPath && agent.remainingDistance <= agent.stoppingDistance){
+            isMoveing = false;
+            agent.ResetPath();
         }
     }
 
@@ -47,11 +60,20 @@ public class NavAIMoveModel : MonoBehaviour{
     public void NavMove(Vector3 target){
         agent.ResetPath();
         agent.SetDestination(target);
-        if (isDrawLine){
-            StartCoroutine(DrawLine());
-        }
+        isMoveing = true;
     }
 
+    public void RePos(){
+        agent.ResetPath();
+        if (startSteert){
+            agent.gameObject.transform.position = startSteert.transform.position;
+        }
+        else{
+            agent.gameObject.transform.position = new Vector3(2, 1, -2);
+            agent.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        }
+    }
+    
     IEnumerator DrawLine(){
         if (agent is null){
             yield break;

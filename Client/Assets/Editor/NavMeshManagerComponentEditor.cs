@@ -33,8 +33,8 @@ namespace Editor{
                     { "F12", "1" },
                     { "F21", "1" },
                     { "F22", "1" },
-                    { "F31", "1" },
-                    { "F32", "1" }
+                    // { "F31", "1" },
+                    // { "F32", "1" }
                 };
                 return;
             }
@@ -42,38 +42,36 @@ namespace Editor{
             areaCostDict["F12"] = manager.GetStreetPlateCostByDict("F12").ToString();
             areaCostDict["F21"] = manager.GetStreetPlateCostByDict("F21").ToString();
             areaCostDict["F22"] = manager.GetStreetPlateCostByDict("F22").ToString();
-            areaCostDict["F31"] = manager.GetStreetPlateCostByDict("F31").ToString();
-            areaCostDict["F32"] = manager.GetStreetPlateCostByDict("F32").ToString();
+            // areaCostDict["F31"] = manager.GetStreetPlateCostByDict("F31").ToString();
+            // areaCostDict["F32"] = manager.GetStreetPlateCostByDict("F32").ToString();
 
             GUILayout.Space(20);
             //电梯权值
-            for (int i = 0; i < elevatorCount; i++){
-                GUILayout.BeginHorizontal();
-                GUILayout.Label($"电梯{i}权值");
-                elevatorsCost[i] = GUILayout.TextField(elevatorsCost[i], 10);
-                GUILayout.EndHorizontal();
-            }
-            List<string> keys = new List<string>(areaCostDict.Keys);
-            for (int i = 0; i < keys.Count; i++){
-                var key = keys[i];
-                GUILayout.BeginHorizontal();
-                GUILayout.Label(key);
-                areaCostDict[key] = GUILayout.TextField(areaCostDict[key], 10);
-                
-
-                GUILayout.EndHorizontal();
-            }
+            // for (int i = 0; i < elevatorCount; i++){
+            //     GUILayout.BeginHorizontal();
+            //     GUILayout.Label($"电梯{i}权值");
+            //     elevatorsCost[i] = GUILayout.TextField(elevatorsCost[i], 10);
+            //     GUILayout.EndHorizontal();
+            // }
+            // List<string> keys = new List<string>(areaCostDict.Keys);
+            // for (int i = 0; i < keys.Count; i++){
+            //     var key = keys[i];
+            //     GUILayout.BeginHorizontal();
+            //     GUILayout.Label(key);
+            //     areaCostDict[key] = GUILayout.TextField(areaCostDict[key], 10);
+            //     
+            //
+            //     GUILayout.EndHorizontal();
+            // }
 
 
             if (GUILayout.Button("设置权值")){
                 for (int i = 0; i < elevatorCount; i++){
-                    manager.SetElevatorCost(i,
-                        float.TryParse(elevatorsCost[i], out float elevatorCost) ? elevatorCost : -1f);
+                    manager.SetElevatorCost(i, manager.GetElevatorCost(i));
                 }
-
-                float areaCost;
+                
                 foreach (var key in areaCostDict.Keys){
-                    manager.SetStreetPlateCost(key, float.TryParse(areaCostDict[key], out areaCost) ? areaCost : 1f);
+                    manager.SetStreetPlateCost(key, manager.GetStreetPlateCostByDict(key));
                 }
             }
 

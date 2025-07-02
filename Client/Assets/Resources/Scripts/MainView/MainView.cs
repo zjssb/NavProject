@@ -54,8 +54,8 @@ public class MainView : MonoBehaviour{
     }
 
     private void Update(){
-        if (Input.GetKeyUp(KeyCode.Z)){
-            if (cameraCanMove){
+        if (!NavAIMoveModel.Instance.isMoveing && Input.GetKeyUp(KeyCode.Z)){
+            if (FirstPersonController.Instance.cameraCanMove || cameraCanMove){
                 FirstPersonController.Instance.ChangeCursor(CursorLockMode.None);
                 FirstPersonController.Instance.cameraCanMove = false;
                 cameraCanMove = false;
